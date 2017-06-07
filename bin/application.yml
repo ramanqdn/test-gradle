@@ -1,0 +1,67 @@
+debug: true
+
+security:
+  user:
+    password: none
+cors:
+  allowed:
+      origins: "*"
+      
+# Set the file size limit (default 1Mb). If you want to specify that files be 
+# unlimited set the multipart.maxFileSize property to -1.
+multipart:
+   maxFileSize: -1
+   maxRequestSize: 2048MB
+#  file-size-threshold: 1024MB
+ 
+---
+  
+spring:
+  profiles: default, local
+
+  oauth2:
+    sso:
+      home:
+        secure: false
+        path: /,/**/*.html
+    client:
+      accessTokenUri: http://localhost:9999/uaa/oauth/token
+      userAuthorizationUri: http://localhost:9999/uaa/oauth/authorize
+      clientId: clientapp
+      clientSecret: 123456
+    resource:
+      userInfoUri: http://localhost:9999/uaa/user
+      jwt:
+        keyValue: |
+          -----BEGIN PUBLIC KEY-----
+          MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnGp/Q5lh0P8nPL21oMMrt2RrkT9AW5jgYwLfSUnJVc9G6uR3cXRRDCjHqWU5WYwivcF180A6CWp/ireQFFBNowgc5XaA0kPpzEtgsA5YsNX7iSnUibB004iBTfU9hZ2Rbsc8cWqynT0RyN4TP1RYVSeVKvMQk4GT1r7JCEC+TNu1ELmbNwMQyzKjsfBXyIOCFU/E94ktvsTZUHF4Oq44DBylCDsS1k7/sfZC2G5EU7Oz0mhG8+Uz6MSEQHtoIi6mc8u64Rwi3Z3tscuWG2ShtsUFuNSAFNkY7LkLn+/hxLCu2bNISMaESa8dG22CIMuIeRLVcAmEWEWH5EEforTg+QIDAQAB
+          -----END PUBLIC KEY-----
+#  http:
+#    multipart:
+#        enabled: true
+#        max-file-size: -1
+#        max-request-size: 1024Mb    
+logging:
+  level:
+    org.springframework.security: INFO
+    
+server:
+  port: 8888
+
+zuul:
+    host:
+      socket-timeout-millis: 60000 
+    routes:
+    
+      user:
+        path: /user/**
+        url: http://115.248.100.78:8082/user
+      group:
+        path: /group/**
+        url: http://115.248.100.78:8082/group    
+      company:
+        path: /company/**
+        url: http://115.248.100.78:8082/company
+      login:
+        path: /login/**
+        url: http://115.248.100.78:8082/login
