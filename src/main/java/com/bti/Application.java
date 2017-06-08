@@ -22,7 +22,7 @@ public class Application {
 	private static Logger LOG = LoggerFactory.getLogger(Application.class);
     public static void main(String[] args) {
     	LOG.info("In GatewayApplication main");
-    	System.out.println("=============In GatewayApplication main===============");
+    	System.out.println("========Raman In GatewayApplication main===============");
         SpringApplication.run(Application.class, args);
     }
 
